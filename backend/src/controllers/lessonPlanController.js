@@ -1,4 +1,5 @@
 import LessonPlanService from '../services/lessonPlanService.js';
+import { resolveSessionId } from '../config/sessionHelper.js';
 
 class LessonPlanController {
   constructor() {
@@ -8,7 +9,7 @@ class LessonPlanController {
   getLessons = async (req, res) => {
     try {
       const { class_section_id, subject_group_subject_id, session_id } = req.query;
-      const sessionId = session_id ? parseInt(session_id) : 1;
+      const sessionId = await resolveSessionId(session_id);
       const data = await this.service.getLessons(
         parseInt(class_section_id),
         parseInt(subject_group_subject_id),
@@ -23,7 +24,7 @@ class LessonPlanController {
   saveLesson = async (req, res) => {
     try {
       const { id, name, subject_group_subject_id, subject_group_class_sections_id, session_id } = req.body;
-      const sessionId = session_id ? parseInt(session_id) : 1;
+      const sessionId = await resolveSessionId(session_id);
       const data = await this.service.saveLesson(
         id,
         name,
@@ -50,7 +51,7 @@ class LessonPlanController {
   getTopics = async (req, res) => {
     try {
       const { lesson_id } = req.query;
-      const sessionId = req.query.session_id ? parseInt(req.query.session_id) : 1;
+      const sessionId = await resolveSessionId(req.query.session_id);
       const data = await this.service.getTopics(parseInt(lesson_id), sessionId);
       res.json({ success: true, data });
     } catch (err) {
@@ -61,7 +62,7 @@ class LessonPlanController {
   saveTopic = async (req, res) => {
     try {
       const { id, name, lesson_id, status, complete_date, session_id } = req.body;
-      const sessionId = session_id ? parseInt(session_id) : 1;
+      const sessionId = await resolveSessionId(session_id);
       const data = await this.service.saveTopic(
         id,
         name,
@@ -89,7 +90,7 @@ class LessonPlanController {
   getSyllabusStatus = async (req, res) => {
     try {
       const { class_section_id, subject_group_subject_id, session_id } = req.query;
-      const sessionId = session_id ? parseInt(session_id) : 1;
+      const sessionId = await resolveSessionId(session_id);
       const data = await this.service.getSyllabusStatus(
         parseInt(class_section_id),
         parseInt(subject_group_subject_id),
@@ -104,7 +105,7 @@ class LessonPlanController {
   getSyllabusLogs = async (req, res) => {
     try {
       const { topic_id } = req.query;
-      const sessionId = req.query.session_id ? parseInt(req.query.session_id) : 1;
+      const sessionId = await resolveSessionId(req.query.session_id);
       const data = await this.service.getSyllabusLogs(parseInt(topic_id), sessionId);
       res.json({ success: true, data });
     } catch (err) {
@@ -138,7 +139,7 @@ class LessonPlanController {
       const logData = {
         id,
         topic_id: parseInt(topic_id),
-        session_id: session_id ? parseInt(session_id) : 1,
+        session_id: await resolveSessionId(session_id),
         created_by: parseInt(created_by),
         created_for: parseInt(created_for),
         date,

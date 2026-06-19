@@ -20,7 +20,7 @@ export default function TeachersTimetablePage() {
   useEffect(() => {
     async function loadTeachers() {
       try {
-        const res = await fetch('/api/staff');
+        const res = await fetch('/api/staff?role_id=2');
         const json = await res.json();
         setStaffList(json.data || []);
       } catch (err) {

@@ -1,4 +1,5 @@
 import AcademicsService from '../services/academicsService.js';
+import { resolveSessionId } from '../config/sessionHelper.js';
 
 class AcademicsController {
   constructor() {
@@ -7,7 +8,7 @@ class AcademicsController {
 
   getSubjectGroups = async (req, res) => {
     try {
-      const sessionId = req.query.session_id ? parseInt(req.query.session_id) : 1;
+      const sessionId = await resolveSessionId(req.query.session_id);
       const data = await this.service.getSubjectGroups(sessionId);
       res.json({ success: true, data });
     } catch (err) {
@@ -18,7 +19,7 @@ class AcademicsController {
   saveSubjectGroup = async (req, res) => {
     try {
       const { id, name, description, subject_ids, class_section_ids, session_id } = req.body;
-      const sessionId = session_id ? parseInt(session_id) : 1;
+      const sessionId = await resolveSessionId(session_id);
       const data = await this.service.saveSubjectGroup(id, name, description, subject_ids, class_section_ids, sessionId);
       res.json({ success: true, message: 'Subject Group saved successfully', data });
     } catch (err) {
@@ -38,7 +39,7 @@ class AcademicsController {
 
   getClassTeachers = async (req, res) => {
     try {
-      const sessionId = req.query.session_id ? parseInt(req.query.session_id) : 1;
+      const sessionId = await resolveSessionId(req.query.session_id);
       const data = await this.service.getClassTeachers(sessionId);
       res.json({ success: true, data });
     } catch (err) {
@@ -49,7 +50,7 @@ class AcademicsController {
   assignClassTeachers = async (req, res) => {
     try {
       const { class_id, section_id, staff_ids, session_id } = req.body;
-      const sessionId = session_id ? parseInt(session_id) : 1;
+      const sessionId = await resolveSessionId(session_id);
       await this.service.assignClassTeachers(parseInt(class_id), parseInt(section_id), staff_ids, sessionId);
       res.json({ success: true, message: 'Class teachers assigned successfully' });
     } catch (err) {
@@ -60,7 +61,7 @@ class AcademicsController {
   getTimetable = async (req, res) => {
     try {
       const { class_id, section_id, subject_group_id, session_id } = req.query;
-      const sessionId = session_id ? parseInt(session_id) : 1;
+      const sessionId = await resolveSessionId(session_id);
       const data = await this.service.getTimetable(
         parseInt(class_id),
         parseInt(section_id),
@@ -76,7 +77,7 @@ class AcademicsController {
   saveTimetable = async (req, res) => {
     try {
       const { class_id, section_id, subject_group_id, entries, session_id } = req.body;
-      const sessionId = session_id ? parseInt(session_id) : 1;
+      const sessionId = await resolveSessionId(session_id);
       await this.service.saveTimetable(
         parseInt(class_id),
         parseInt(section_id),
@@ -93,7 +94,7 @@ class AcademicsController {
   getTeacherTimetable = async (req, res) => {
     try {
       const { staff_id } = req.params;
-      const sessionId = req.query.session_id ? parseInt(req.query.session_id) : 1;
+      const sessionId = await resolveSessionId(req.query.session_id);
       const data = await this.service.getTeacherTimetable(parseInt(staff_id), sessionId);
       res.json({ success: true, data });
     } catch (err) {

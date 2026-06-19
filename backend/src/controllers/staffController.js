@@ -11,12 +11,13 @@ class StaffController {
       const id = req.query.id || null;
       const search = req.query.search || null;
       const active = req.query.active !== undefined ? parseInt(req.query.active) : 1;
+      const roleId = req.query.role_id ? parseInt(req.query.role_id) : null;
 
       let data;
       if (search) {
         data = await this.staffService.searchStaff(search, active);
       } else {
-        data = await this.staffService.getStaff(id);
+        data = await this.staffService.getStaff(id, roleId);
       }
       return res.status(200).json({ success: true, data });
     } catch (error) {

@@ -7,8 +7,8 @@ class StaffService {
   }
 
   // --- STAFF BUSINESS METHODS ---
-  async getStaff(id = null) {
-    return await this.staffRepository.get(id);
+  async getStaff(id = null, roleId = null) {
+    return await this.staffRepository.get(id, roleId);
   }
 
   async getStaffProfile(id) {

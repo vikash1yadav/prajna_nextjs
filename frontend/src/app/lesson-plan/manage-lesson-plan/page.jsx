@@ -59,7 +59,7 @@ export default function ManageLessonPlanPage() {
         const classesJson = await classesRes.json();
         setClasses(classesJson.data || []);
 
-        const staffRes = await fetch('/api/staff');
+        const staffRes = await fetch('/api/staff?role_id=2');
         const staffJson = await staffRes.json();
         setStaffList(staffJson.data || []);
         if (staffJson.data && staffJson.data.length > 0) {

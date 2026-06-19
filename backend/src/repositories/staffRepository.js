@@ -6,9 +6,23 @@ import { QueryTypes, Op } from 'sequelize';
 
 class StaffRepository {
   // --- STAFF METHODS ---
-  async get(id = null) {
+  async get(id = null, roleId = null) {
     if (id !== null) {
       return await Staff.findByPk(id);
+    }
+    if (roleId !== null) {
+      const sql = `
+        SELECT staff.*
+        FROM staff
+        INNER JOIN staff_roles ON staff.id = staff_roles.staff_id
+        WHERE staff_roles.role_id = :roleId
+          AND staff.is_active = 1
+        ORDER BY staff.id ASC
+      `;
+      return await sequelize.query(sql, {
+        replacements: { roleId },
+        type: QueryTypes.SELECT
+      });
     }
     return await Staff.findAll({
       order: [['id', 'ASC']]

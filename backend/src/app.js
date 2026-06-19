@@ -25,6 +25,11 @@ import generalCallRoutes from './routes/generalCallRoutes.js';
 import complaintRoutes from './routes/complaintRoutes.js';
 import visitorRoutes from './routes/visitorRoutes.js';
 import enquiryRoutes from './routes/enquiryRoutes.js';
+import incomeRoutes from './routes/incomeRoutes.js';
+import expenseRoutes from './routes/expenseRoutes.js';
+import leaveRoutes from './routes/leaveRoutes.js';
+import academicsRoutes from './routes/academicsRoutes.js';
+import lessonPlanRoutes from './routes/lessonPlanRoutes.js';
 
 const app = express();
 
@@ -333,6 +338,302 @@ app.use((req, res, next) => {
     });
   }
 
+  // Mock Income
+  if (path === '/api/income/heads' && method === 'GET') {
+    return res.json({
+      success: true,
+      data: [
+        { id: 1, income_category: 'Donations', description: 'General donations', is_active: 'yes' },
+        { id: 2, income_category: 'Rental', description: 'Hall rental income', is_active: 'yes' }
+      ]
+    });
+  }
+  if (path === '/api/income/heads' && method === 'POST') {
+    return res.json({
+      success: true,
+      message: 'Income head saved successfully (Mock)',
+      data: { id: Date.now() }
+    });
+  }
+  if (path.match(/^\/api\/income\/heads\/\d+$/) && method === 'DELETE') {
+    return res.json({
+      success: true,
+      message: 'Income head deleted successfully (Mock)'
+    });
+  }
+  if (path === '/api/income' && method === 'GET') {
+    return res.json({
+      success: true,
+      data: [
+        { id: 1, name: 'Alumni Donation', invoice_no: 'INC-001', income_head_id: 1, date: '2026-06-18', amount: 5000, note: 'Received from John', is_active: 'yes', IncomeHead: { id: 1, income_category: 'Donations' } },
+        { id: 2, name: 'Hall Rent', invoice_no: 'INC-002', income_head_id: 2, date: '2026-06-19', amount: 1200, note: 'Weekly renting', is_active: 'yes', IncomeHead: { id: 2, income_category: 'Rental' } }
+      ]
+    });
+  }
+  if (path === '/api/income' && method === 'POST') {
+    return res.json({
+      success: true,
+      message: 'Income saved successfully (Mock)',
+      data: { id: Date.now() }
+    });
+  }
+  if (path.match(/^\/api\/income\/\d+$/) && method === 'DELETE') {
+    return res.json({
+      success: true,
+      message: 'Income deleted successfully (Mock)'
+    });
+  }
+
+  // Mock Expenses
+  if (path === '/api/expenses/heads' && method === 'GET') {
+    return res.json({
+      success: true,
+      data: [
+        { id: 1, exp_category: 'Salaries', description: 'Staff monthly salaries', is_active: 'yes' },
+        { id: 2, exp_category: 'Electricity', description: 'Power bills', is_active: 'yes' }
+      ]
+    });
+  }
+  if (path === '/api/expenses/heads' && method === 'POST') {
+    return res.json({
+      success: true,
+      message: 'Expense head saved successfully (Mock)',
+      data: { id: Date.now() }
+    });
+  }
+  if (path.match(/^\/api\/expenses\/heads\/\d+$/) && method === 'DELETE') {
+    return res.json({
+      success: true,
+      message: 'Expense head deleted successfully (Mock)'
+    });
+  }
+  if (path === '/api/expenses' && method === 'GET') {
+    return res.json({
+      success: true,
+      data: [
+        { id: 1, name: 'Teacher Salary', invoice_no: 'EXP-001', exp_head_id: 1, date: '2026-06-15', amount: 15000, note: 'Paid June salaries', is_active: 'yes', ExpenseHead: { id: 1, exp_category: 'Salaries' } },
+        { id: 2, name: 'Utility Bill', invoice_no: 'EXP-002', exp_head_id: 2, date: '2026-06-17', amount: 2300, note: 'Office power bill', is_active: 'yes', ExpenseHead: { id: 2, exp_category: 'Electricity' } }
+      ]
+    });
+  }
+  if (path === '/api/expenses' && method === 'POST') {
+    return res.json({
+      success: true,
+      message: 'Expense saved successfully (Mock)',
+      data: { id: Date.now() }
+    });
+  }
+  if (path.match(/^\/api\/expenses\/\d+$/) && method === 'DELETE') {
+    return res.json({
+      success: true,
+      message: 'Expense deleted successfully (Mock)'
+    });
+  }
+
+  // Mock Leaves
+  if (path === '/api/leaves' && method === 'GET') {
+    return res.json({
+      success: true,
+      data: [
+        { id: 1, student_session_id: 101, from_date: '2026-06-20', to_date: '2026-06-22', apply_date: '2026-06-19', apply_leave_status: 0, status: 0, reason: 'Family function', firstname: 'John', lastname: 'Doe', admission_no: '1001', class: 'Class 1', section: 'A' },
+        { id: 2, student_session_id: 102, from_date: '2026-06-21', to_date: '2026-06-23', apply_date: '2026-06-18', apply_leave_status: 1, status: 1, reason: 'Medical emergency', firstname: 'Jane', lastname: 'Smith', admission_no: '1002', class: 'Class 1', section: 'A', staff_name: 'Admin', approve_date: '2026-06-18' }
+      ]
+    });
+  }
+  if (path === '/api/leaves' && method === 'POST') {
+    return res.json({
+      success: true,
+      message: 'Leave request submitted successfully (Mock)',
+      data: { id: Date.now() }
+    });
+  }
+  if (path.match(/^\/api\/leaves\/\d+\/status$/) && method === 'PUT') {
+    return res.json({
+      success: true,
+      message: 'Leave request status updated successfully (Mock)'
+    });
+  }
+  if (path.match(/^\/api\/leaves\/\d+$/) && method === 'DELETE') {
+    return res.json({
+      success: true,
+      message: 'Leave request deleted successfully (Mock)'
+    });
+  }
+
+  // Mock Academics
+  if (path === '/api/academics/subject-groups' && method === 'GET') {
+    return res.json({
+      success: true,
+      data: [
+        {
+          id: 1,
+          name: 'Science Group',
+          description: 'Science stream group',
+          session_id: 1,
+          subjects: [
+            { id: 1, name: 'Physics', code: 'PHY101', type: 'Theory' },
+            { id: 2, name: 'Chemistry', code: 'CHM101', type: 'Theory' }
+          ],
+          sections: [
+            { class_section_id: 1, class_id: 1, section_id: 1, class_name: 'Class 1', section_name: 'A' }
+          ]
+        }
+      ]
+    });
+  }
+  if (path === '/api/academics/subject-groups' && method === 'POST') {
+    return res.json({
+      success: true,
+      message: 'Subject Group saved successfully (Mock)',
+      data: { id: Date.now() }
+    });
+  }
+  if (path.match(/^\/api\/academics\/subject-groups\/\d+$/) && method === 'DELETE') {
+    return res.json({
+      success: true,
+      message: 'Subject Group deleted successfully (Mock)'
+    });
+  }
+  if (path === '/api/academics/class-teachers' && method === 'GET') {
+    return res.json({
+      success: true,
+      data: [
+        {
+          class_id: 1,
+          section_id: 1,
+          class_name: 'Class 1',
+          section_name: 'A',
+          teachers: [
+            { ct_id: 1, staff_id: 1, name: 'Admin Staff', employee_id: 'EMP001' }
+          ]
+        }
+      ]
+    });
+  }
+  if (path === '/api/academics/class-teachers' && method === 'POST') {
+    return res.json({
+      success: true,
+      message: 'Class teachers assigned successfully (Mock)'
+    });
+  }
+  if (path === '/api/academics/timetable' && method === 'GET') {
+    return res.json({
+      success: true,
+      data: [
+        { id: 1, session_id: 1, class_id: 1, section_id: 1, subject_group_id: 1, subject_group_subject_id: 1, staff_id: 1, day: 'Monday', time_from: '09:00 AM', time_to: '10:00 AM', start_time: '09:00:00', end_time: '10:00:00', room_no: 'Room 101', subject_name: 'Physics', staff_name: 'Admin Staff' }
+      ]
+    });
+  }
+  if (path === '/api/academics/timetable' && method === 'POST') {
+    return res.json({
+      success: true,
+      message: 'Subject Timetable saved successfully (Mock)'
+    });
+  }
+  if (path.match(/^\/api\/academics\/timetable\/teacher\/\d+$/) && method === 'GET') {
+    return res.json({
+      success: true,
+      data: [
+        { id: 1, session_id: 1, class_id: 1, section_id: 1, subject_group_id: 1, subject_group_subject_id: 1, staff_id: 1, day: 'Monday', time_from: '09:00 AM', time_to: '10:00 AM', start_time: '09:00:00', end_time: '10:00:00', room_no: 'Room 101', class_name: 'Class 1', section_name: 'A', subject_name: 'Physics' }
+      ]
+    });
+  }
+  if (path === '/api/academics/promote-students' && method === 'POST') {
+    return res.json({
+      success: true,
+      message: 'Students promoted successfully (Mock)',
+      data: []
+    });
+  }
+
+  // Mock Lesson Plan
+  if (path === '/api/lesson-plan/lessons' && method === 'GET') {
+    return res.json({
+      success: true,
+      data: [
+        { id: 1, session_id: 1, subject_group_subject_id: 1, subject_group_class_sections_id: 1, name: 'Introduction to Mechanics', subject_name: 'Physics', subject_code: 'PHY101' }
+      ]
+    });
+  }
+  if (path === '/api/lesson-plan/lessons' && method === 'POST') {
+    return res.json({
+      success: true,
+      message: 'Lesson saved successfully (Mock)',
+      data: { id: Date.now() }
+    });
+  }
+  if (path.match(/^\/api\/lesson-plan\/lessons\/\d+$/) && method === 'DELETE') {
+    return res.json({
+      success: true,
+      message: 'Lesson deleted successfully (Mock)'
+    });
+  }
+  if (path === '/api/lesson-plan/topics' && method === 'GET') {
+    return res.json({
+      success: true,
+      data: [
+        { id: 1, session_id: 1, lesson_id: 1, name: 'Newton Laws', status: 1, complete_date: '2026-06-19' },
+        { id: 2, session_id: 1, lesson_id: 1, name: 'Friction', status: 0, complete_date: null }
+      ]
+    });
+  }
+  if (path === '/api/lesson-plan/topics' && method === 'POST') {
+    return res.json({
+      success: true,
+      message: 'Topic saved successfully (Mock)',
+      data: { id: Date.now() }
+    });
+  }
+  if (path.match(/^\/api\/lesson-plan\/topics\/\d+$/) && method === 'DELETE') {
+    return res.json({
+      success: true,
+      message: 'Topic deleted successfully (Mock)'
+    });
+  }
+  if (path === '/api/lesson-plan/syllabus-status' && method === 'GET') {
+    return res.json({
+      success: true,
+      data: [
+        {
+          lesson_id: 1,
+          lesson_name: 'Introduction to Mechanics',
+          topics: [
+            { topic_id: 1, topic_name: 'Newton Laws', status: 1, complete_date: '2026-06-19' },
+            { topic_id: 2, topic_name: 'Friction', status: 0, complete_date: null }
+          ]
+        }
+      ]
+    });
+  }
+  if (path === '/api/lesson-plan/syllabus-logs' && method === 'GET') {
+    return res.json({
+      success: true,
+      data: [
+        { id: 1, topic_id: 1, session_id: 1, created_by: 1, created_for: 1, date: '2026-06-19', time_from: '09:00 AM', time_to: '10:00 AM', presentation: 'Slides', attachment: null, sub_topic: 'First Law', teaching_method: 'Board', general_objectives: 'Understand rest/motion', previous_knowledge: 'Basic forces', comprehensive_questions: 'What is inertia?', status: 1, staff_name: 'Admin Staff' }
+      ]
+    });
+  }
+  if (path === '/api/lesson-plan/syllabus-logs' && method === 'POST') {
+    return res.json({
+      success: true,
+      message: 'Syllabus log saved successfully (Mock)',
+      data: { id: Date.now() }
+    });
+  }
+  if (path.match(/^\/api\/lesson-plan\/syllabus-logs\/\d+$/) && method === 'DELETE') {
+    return res.json({
+      success: true,
+      message: 'Syllabus log deleted successfully (Mock)'
+    });
+  }
+  if (path === '/api/lesson-plan/copy-lessons' && method === 'POST') {
+    return res.json({
+      success: true,
+      message: 'Lessons copied successfully (Mock)',
+      data: []
+    });
+  }
+
   next();
 
 });
@@ -361,6 +662,11 @@ app.use('/api/general-calls', generalCallRoutes);
 app.use('/api/complaints', complaintRoutes);
 app.use('/api/visitors', visitorRoutes);
 app.use('/api/enquiries', enquiryRoutes);
+app.use('/api/income', incomeRoutes);
+app.use('/api/expenses', expenseRoutes);
+app.use('/api/leaves', leaveRoutes);
+app.use('/api/academics', academicsRoutes);
+app.use('/api/lesson-plan', lessonPlanRoutes);
 
 // Health Check Route
 app.get('/health', (req, res) => {

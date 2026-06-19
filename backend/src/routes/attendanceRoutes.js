@@ -9,5 +9,6 @@ router.get('/search', controller.searchAttendance);
 router.get('/monthly', controller.getMonthlyAttendance);
 router.get('/summary', controller.getTodayAttendanceSummary);
 router.post('/', controller.saveAttendance);
+router.post('/save', controller.saveAttendance);
 
 export default router;

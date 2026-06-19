@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import './globals.css';
 import Link from 'next/link';
 import LoginPage from './login/page.jsx';
-import { LogOut, User, ChevronDown, ChevronRight, Users, Briefcase, CreditCard, GraduationCap } from 'lucide-react';
+import { LogOut, User, ChevronDown, ChevronRight, Users, Briefcase, CreditCard, GraduationCap, Calendar, TrendingUp, TrendingDown, BookOpen, Clock, Book } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 
@@ -15,6 +15,11 @@ export default function RootLayout({ children }) {
   const [isFrontOfficeOpen, setIsFrontOfficeOpen] = useState(false);
   const [isFeesCollectionOpen, setIsFeesCollectionOpen] = useState(false);
   const [isExaminationsOpen, setIsExaminationsOpen] = useState(false);
+  const [isAttendanceOpen, setIsAttendanceOpen] = useState(false);
+  const [isIncomeOpen, setIsIncomeOpen] = useState(false);
+  const [isExpensesOpen, setIsExpensesOpen] = useState(false);
+  const [isAcademicsOpen, setIsAcademicsOpen] = useState(false);
+  const [isLessonPlanOpen, setIsLessonPlanOpen] = useState(false);
 
   useEffect(() => {
     // Check if token and user exist in storage
@@ -75,7 +80,7 @@ export default function RootLayout({ children }) {
                 </h1>
               </div>
 
-              <nav className="flex flex-col gap-1.5 flex-grow">
+              <nav className="flex flex-col gap-1.5 flex-grow overflow-y-auto pr-1">
                 <Link href="/" className="flex items-center gap-3 px-4 py-3 rounded-lg text-zinc-400 font-medium text-sm transition-all hover:bg-white/5 hover:text-white">
                   Dashboard
                 </Link>
@@ -163,9 +168,33 @@ export default function RootLayout({ children }) {
                     </div>
                   )}
                 </div>
-                <Link href="/attendance" className="flex items-center gap-3 px-4 py-3 rounded-lg text-zinc-400 font-medium text-sm transition-all hover:bg-white/5 hover:text-white">
-                  Attendance Register
-                </Link>
+                {/* Attendance Dropdown */}
+                <div className="flex flex-col">
+                  <button 
+                    onClick={() => setIsAttendanceOpen(!isAttendanceOpen)} 
+                    className="flex items-center justify-between px-4 py-3 rounded-lg text-zinc-400 font-medium text-sm transition-all hover:bg-white/5 hover:text-white w-full text-left"
+                  >
+                    <div className="flex items-center gap-3">
+                      <Calendar size={18} />
+                      Attendance
+                    </div>
+                    {isAttendanceOpen ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                  </button>
+                  
+                  {isAttendanceOpen && (
+                    <div className="flex flex-col ml-8 mt-1 gap-1 border-l border-white/10 pl-2">
+                      <Link href="/attendance" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
+                        Student Attendance
+                      </Link>
+                      <Link href="/attendance/approve-leave" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
+                        Approve Leave
+                      </Link>
+                      <Link href="/attendance/by-date" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
+                        Attendance By Date
+                      </Link>
+                    </div>
+                  )}
+                </div>
                  <div className="flex flex-col">
                   <button 
                     onClick={() => setIsExaminationsOpen(!isExaminationsOpen)} 
@@ -253,6 +282,124 @@ export default function RootLayout({ children }) {
                       </Link>
                       <Link href="/fees/reminder" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
                         Fees Reminder
+                      </Link>
+                    </div>
+                  )}
+                </div>
+
+                {/* Income Dropdown */}
+                <div className="flex flex-col">
+                  <button 
+                    onClick={() => setIsIncomeOpen(!isIncomeOpen)} 
+                    className="flex items-center justify-between px-4 py-3 rounded-lg text-zinc-400 font-medium text-sm transition-all hover:bg-white/5 hover:text-white w-full text-left"
+                  >
+                    <div className="flex items-center gap-3">
+                      <TrendingUp size={18} />
+                      Income
+                    </div>
+                    {isIncomeOpen ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                  </button>
+                  
+                  {isIncomeOpen && (
+                    <div className="flex flex-col ml-8 mt-1 gap-1 border-l border-white/10 pl-2">
+                      <Link href="/income" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
+                        Add Income
+                      </Link>
+                      <Link href="/income/head" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
+                        Income Head
+                      </Link>
+                    </div>
+                  )}
+                </div>
+
+                {/* Expenses Dropdown */}
+                <div className="flex flex-col">
+                  <button 
+                    onClick={() => setIsExpensesOpen(!isExpensesOpen)} 
+                    className="flex items-center justify-between px-4 py-3 rounded-lg text-zinc-400 font-medium text-sm transition-all hover:bg-white/5 hover:text-white w-full text-left"
+                  >
+                    <div className="flex items-center gap-3">
+                      <TrendingDown size={18} />
+                      Expenses
+                    </div>
+                    {isExpensesOpen ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                  </button>
+                  
+                                  {isExpensesOpen && (
+                    <div className="flex flex-col ml-8 mt-1 gap-1 border-l border-white/10 pl-2">
+                      <Link href="/expenses" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
+                        Add Expense
+                      </Link>
+                      <Link href="/expenses/head" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
+                        Expense Head
+                      </Link>
+                    </div>
+                  )}
+                </div>
+
+                {/* Academics Dropdown */}
+                <div className="flex flex-col">
+                  <button 
+                    onClick={() => setIsAcademicsOpen(!isAcademicsOpen)} 
+                    className="flex items-center justify-between px-4 py-3 rounded-lg text-zinc-400 font-medium text-sm transition-all hover:bg-white/5 hover:text-white w-full text-left"
+                  >
+                    <div className="flex items-center gap-3">
+                      <GraduationCap size={18} />
+                      Academics
+                    </div>
+                    {isAcademicsOpen ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                  </button>
+                  
+                  {isAcademicsOpen && (
+                    <div className="flex flex-col ml-8 mt-1 gap-1 border-l border-white/10 pl-2">
+                      <Link href="/academics/class-timetable" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
+                        Class Timetable
+                      </Link>
+                      <Link href="/academics/teachers-timetable" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
+                        Teachers Timetable
+                      </Link>
+                      <Link href="/academics/assign-class-teacher" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
+                        Assign Class Teacher
+                      </Link>
+                      <Link href="/academics/promote-students" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
+                        Promote Students
+                      </Link>
+                      <Link href="/academics/subject-group" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
+                        Subject Group
+                      </Link>
+                    </div>
+                  )}
+                </div>
+
+                {/* Lesson Plan Dropdown */}
+                <div className="flex flex-col">
+                  <button 
+                    onClick={() => setIsLessonPlanOpen(!isLessonPlanOpen)} 
+                    className="flex items-center justify-between px-4 py-3 rounded-lg text-zinc-400 font-medium text-sm transition-all hover:bg-white/5 hover:text-white w-full text-left"
+                  >
+                    <div className="flex items-center gap-3">
+                      <BookOpen size={18} />
+                      Lesson Plan
+                    </div>
+                    {isLessonPlanOpen ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                  </button>
+                  
+                  {isLessonPlanOpen && (
+                    <div className="flex flex-col ml-8 mt-1 gap-1 border-l border-white/10 pl-2">
+                      <Link href="/lesson-plan/copy-old-lessons" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
+                        Copy Old Lessons
+                      </Link>
+                      <Link href="/lesson-plan/manage-lesson-plan" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
+                        Manage Lesson Plan
+                      </Link>
+                      <Link href="/lesson-plan/manage-syllabus-status" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
+                        Manage Syllabus Status
+                      </Link>
+                      <Link href="/lesson-plan/lesson" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
+                        Lesson
+                      </Link>
+                      <Link href="/lesson-plan/topic" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
+                        Topic
                       </Link>
                     </div>
                   )}

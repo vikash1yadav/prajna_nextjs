@@ -20,6 +20,7 @@ export default function RootLayout({ children }) {
   const [isExpensesOpen, setIsExpensesOpen] = useState(false);
   const [isAcademicsOpen, setIsAcademicsOpen] = useState(false);
   const [isLessonPlanOpen, setIsLessonPlanOpen] = useState(false);
+  const [isHumanResourceOpen, setIsHumanResourceOpen] = useState(false);
 
   useEffect(() => {
     // Check if token and user exist in storage
@@ -367,6 +368,15 @@ export default function RootLayout({ children }) {
                       <Link href="/academics/subject-group" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
                         Subject Group
                       </Link>
+                      <Link href="/academics/subjects" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
+                        Subjects
+                      </Link>
+                      <Link href="/academics/class" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
+                        Class
+                      </Link>
+                      <Link href="/academics/sections" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
+                        Sections
+                      </Link>
                     </div>
                   )}
                 </div>
@@ -400,6 +410,55 @@ export default function RootLayout({ children }) {
                       </Link>
                       <Link href="/lesson-plan/topic" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
                         Topic
+                      </Link>
+                    </div>
+                  )}
+                </div>
+
+                {/* Human Resource Dropdown */}
+                <div className="flex flex-col">
+                  <button 
+                    onClick={() => setIsHumanResourceOpen(!isHumanResourceOpen)} 
+                    className="flex items-center justify-between px-4 py-3 rounded-lg text-zinc-400 font-medium text-sm transition-all hover:bg-white/5 hover:text-white w-full text-left"
+                  >
+                    <div className="flex items-center gap-3">
+                      <Briefcase size={18} />
+                      Human Resource
+                    </div>
+                    {isHumanResourceOpen ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                  </button>
+                  
+                  {isHumanResourceOpen && (
+                    <div className="flex flex-col ml-8 mt-1 gap-1 border-l border-white/10 pl-2">
+                      <Link href="/hr/staff" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
+                        Staff Directory
+                      </Link>
+                      <Link href="/hr/attendance" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
+                        Staff Attendance
+                      </Link>
+                      <Link href="/hr/payroll" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
+                        Payroll
+                      </Link>
+                      <Link href="/hr/leave-approve" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
+                        Approve Leave Request
+                      </Link>
+                      <Link href="/hr/leave-apply" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
+                        Apply Leave
+                      </Link>
+                      <Link href="/hr/leave-types" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
+                        Leave Type
+                      </Link>
+                      <Link href="/hr/rating" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
+                        Teachers Rating
+                      </Link>
+                      <Link href="/hr/departments" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
+                        Department
+                      </Link>
+                      <Link href="/hr/designations" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
+                        Designation
+                      </Link>
+                      <Link href="/hr/disabled-staff" className="px-3 py-2 rounded-lg text-zinc-400 text-xs font-medium transition-all hover:bg-white/5 hover:text-white">
+                        Disabled Staff
                       </Link>
                     </div>
                   )}

@@ -1,20 +1,17 @@
-import jwt from 'jsonwebtoken';
+import sequelize from '../backend/src/config/database.js';
 
-const payload = {
-  id: 1,
-  email: 'superadmin@prajnaerp.com',
-  name: 'Super Admin',
-  role: 'Super Admin',
-  role_slug: 'superadmin',
-  is_superadmin: 1
-};
+async function test() {
+  try {
+    for (const table of ['staff_designation', 'leave_types']) {
+      const desc = await sequelize.query(`DESCRIBE \`${table}\``, { type: sequelize.QueryTypes.SELECT });
+      console.log(`\nTable Schema: ${table}`);
+      console.log(desc.map(d => `${d.Field}: ${d.Type} (${d.Null}, ${d.Key})`));
+    }
+    process.exit(0);
+  } catch (err) {
+    console.error(err);
+    process.exit(1);
+  }
+}
 
-const token = jwt.sign(
-  payload,
-  'prajnaerp_secret_key_2026',
-  { expiresIn: '8h' }
-);
-
-console.log('JWT_TOKEN:', token);
-console.log('USER_JSON:', JSON.stringify(payload));
-process.exit(0);
+test();

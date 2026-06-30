@@ -30,6 +30,7 @@ import expenseRoutes from './routes/expenseRoutes.js';
 import leaveRoutes from './routes/leaveRoutes.js';
 import academicsRoutes from './routes/academicsRoutes.js';
 import lessonPlanRoutes from './routes/lessonPlanRoutes.js';
+import hrRoutes from './routes/hrRoutes.js';
 
 const app = express();
 
@@ -667,6 +668,7 @@ app.use('/api/expenses', expenseRoutes);
 app.use('/api/leaves', leaveRoutes);
 app.use('/api/academics', academicsRoutes);
 app.use('/api/lesson-plan', lessonPlanRoutes);
+app.use('/api', hrRoutes);
 
 // Health Check Route
 app.get('/health', (req, res) => {
